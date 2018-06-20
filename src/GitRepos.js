@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from "react";
 import {
   View,
@@ -8,8 +10,30 @@ import {
   Text
 } from "react-native";
 
-class GitRepos extends Component {
-  constructor(props) {
+import store from "../store/store";
+
+export type Repo = {
+  name: string,
+  full_name: string,
+  watchers: string,
+  stargazers_count: string,
+  open_issues_count: string,
+  forks_count: string
+};
+
+type GitReposState = {
+  repos: Repo[],
+  reposInFocus: Repo[],
+  filterByStr: string,
+  projectsToCompare: Repo[]
+};
+
+type GitRepoProps = {
+  org: string
+};
+
+class GitRepos extends Component<GitRepoProps, GitReposState> {
+  constructor(props: GitRepoProps) {
     super(props);
     this.state = {
       repos: [],
@@ -20,70 +44,64 @@ class GitRepos extends Component {
   }
   componentDidMount() {
     // this.unsubscribe = store.subscribe(() => {
-    //   const storeState = store.getState();
-    //   this.setState({
-    //     repos: storeState.projects,
-    //     reposInFocus: storeState.reposInFocus,
-    //     projectsToCompare: storeState.projectsToCompare
-    //   });
-    // });
+    store.subscribe(() => {
+      const storeState = store.getState();
+      this.setState({
+        repos: storeState.projects,
+        reposInFocus: storeState.projectsInFocus,
+        projectsToCompare: storeState.projectsToCompare
+      });
+    });
 
     this.fetchReposByOrg(this.props.org);
   }
-  // componentWillUnmount() {
-  //   store.dispatch({ type: "REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST" });
-  //   this.unsubscribe();
-  // }
-  generateGetReposByOrgUrl(org) {
+  componentWillUnmount() {
+    store.dispatch({ type: "REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST" });
+    // this.unsubscribe();
+  }
+  generateGetReposByOrgUrl(org: string) {
     return `https://api.github.com/orgs/${org}/repos`;
   }
-  fetchReposByOrg(org) {
+  fetchReposByOrg(org: string) {
     fetch(this.generateGetReposByOrgUrl(org))
       .then(resp => resp.json())
-      .then(
-        repos =>
-          this.setState({
-            repos
-          })
-        // store.dispatch({
-        //   type: "SET_PROJECTS",
-        //   payload: repos
-        // })
+      .then((repos: Repo[]) =>
+        store.dispatch({
+          type: "SET_PROJECTS",
+          payload: repos
+        })
       );
   }
-  addToCompare(repo) {
-    // store.dispatch({
-    //   type: "ADD_REPO_TO_COMPARE_LIST",
-    //   payload: repo
-    // });
-    // store.dispatch({
-    //   type: "REMOVE_PROJECT_FOCUS",
-    //   payload: repo
-    // });
+  addToCompare(repo: Repo) {
+    store.dispatch({
+      type: "ADD_REPO_TO_COMPARE_LIST",
+      payload: repo
+    });
+    store.dispatch({
+      type: "REMOVE_PROJECT_FOCUS",
+      payload: repo
+    });
   }
-  // projectBriefInfoOnClick = repo => {
-  //   store.dispatch({
-  //     type: "SET_PROJECT_FOCUS",
-  //     payload: repo
-  //   });
-  // };
-  // projectFullInfoOnClick = repo => {
-  //   store.dispatch({
-  //     type: "REMOVE_PROJECT_FOCUS",
-  //     payload: repo
-  //   });
-  // };
-  handleFilterInput = event => {
-    this.setState({ filterByStr: event.target.value });
+  projectBriefInfoOnClick = (repo: Repo) => {
+    store.dispatch({
+      type: "SET_PROJECT_FOCUS",
+      payload: repo
+    });
   };
-  renderBriefRepoInfo(repo, key) {
+  projectFullInfoOnClick = (repo: Repo) => {
+    store.dispatch({
+      type: "REMOVE_PROJECT_FOCUS",
+      payload: repo
+    });
+  };
+  renderBriefRepoInfo(repo: Repo) {
     return (
-      <Text key={key} onPress={() => this.projectBriefInfoOnClick(repo)}>
+      <Text onPress={() => this.projectBriefInfoOnClick(repo)}>
         {repo.name}
       </Text>
     );
   }
-  renderFullProjectInfo(repo) {
+  renderFullProjectInfo(repo: Repo) {
     return (
       <View>
         <View onPress={() => this.projectFullInfoOnClick(repo)}>
@@ -100,7 +118,7 @@ class GitRepos extends Component {
       </View>
     );
   }
-  renderRepos(repos, reposInFocus) {
+  renderRepos(repos: Repo[], reposInFocus: Repo[]) {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
@@ -116,8 +134,9 @@ class GitRepos extends Component {
       />
     );
   }
-  filterReposByStr(repos, substr) {
-    return repos.filter(repo => repo.name.includes(substr));
+  filterReposByStr(repos: Repo[], substr: string) {
+    substr = substr.toLowerCase();
+    return repos.filter(repo => repo.name.toLowerCase().includes(substr));
   }
   renderCompareAllButton() {
     return (
@@ -131,7 +150,7 @@ class GitRepos extends Component {
               this.state.filterByStr
             )
           });
-          store.dispatch(push("/compare/"));
+          // store.dispatch(push("/compare/"));
         }}
       />
     );
@@ -149,7 +168,10 @@ class GitRepos extends Component {
     return (
       <View style={styles.container}>
         <Text>Filter</Text>
-        <TextInput onChange={this.handleFilterInput} />
+        <TextInput
+          onChangeText={(text) => this.setState({filterByStr :text})}
+          style={{ backgroundColor: "white", width: "80%", height: "5%" }}
+        />
         <Text>Repos by {org}</Text>
         {this.renderRepos(filteredRepos, reposInFocus)}
         {/* {0 !== projectsToCompare.length && <CompareProjectsList />} */}
