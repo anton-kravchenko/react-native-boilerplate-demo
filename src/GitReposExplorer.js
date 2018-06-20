@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, View, Button, TextInput, StyleSheet } from "react-native";
 
 // import store from '../store/store';
-import {  } from 'react-native';
 
 class GitReposExplorer extends Component {
   constructor(props) {
