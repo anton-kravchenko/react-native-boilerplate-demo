@@ -3,9 +3,11 @@ import GitProjectInfo from "./src/GitProjectInfo";
 import GitProjects from "./src/GitProjects";
 import { View } from "react-native";
 
+import GitReposExplorer from './src/GitReposExplorer';
+
 export default class App extends React.Component {
   render() {
-    return <GitProjects org="facebook" />;
+    return <GitReposExplorer />;
     return <GitProjects org="google" />;
 
     return (

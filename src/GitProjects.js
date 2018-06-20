@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, ListView, View, Button } from "react-native";
+import { StyleSheet, Text, ListView, View} from "react-native";
 
 const generateGitOranizationUrl = (org) => `https://api.github.com/orgs/${org}/repos`
 
