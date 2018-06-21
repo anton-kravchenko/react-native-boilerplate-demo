@@ -14,7 +14,9 @@ import {
   Spinner,
   List,
   ListItem,
-  ScrollView
+  ScrollView,
+  Body,
+  CheckBox
 } from "native-base";
 
 import store from "../store/store";
@@ -131,32 +133,41 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       </View>
     );
   }
+  toggleProjectListItem = (repo: Repo) => {
+    const projectsToCompare = this.state.projectsToCompare;
+
+    if (projectsToCompare.includes(repo)) {
+      store.dispatch({
+        type: "REMOVE_REPO_FROM_COMPARE_LIST",
+        payload: repo
+      });
+    } else {
+      store.dispatch({
+        type: "ADD_REPO_TO_COMPARE_LIST",
+        payload: repo
+      });
+    }
+  };
   renderRepos(repos: Repo[], reposInFocus: Repo[]) {
     return (
       <List
         dataArray={repos}
-        renderRow={r => (
-          <ListItem>
-            <Text>{r.name}</Text>
-          </ListItem>
-        )}
+        renderRow={repo => {
+          return (
+            <ListItem>
+              <CheckBox
+                checked={this.state.projectsToCompare.includes(repo)}
+                onPress={() => this.toggleProjectListItem(repo)}
+                color="green"
+              />
+              <Body>
+                <Text>{repo.name}</Text>
+              </Body>
+            </ListItem>
+          );
+        }}
       />
     );
-
-    // const ds = new ListView.DataSource({
-    //   rowHasChanged: (r1, r2) => r1 !== r2
-    // });
-    //
-    // return (
-    //   <ListView
-    //     dataSource={ds.cloneWithRows(repos)}
-    //     renderRow={repo =>
-    //       reposInFocus.includes(repo)
-    //         ? this.renderFullProjectInfo(repo)
-    //         : this.renderBriefRepoInfo(repo)
-    //     }
-    //   />
-    // );
   }
   filterReposByStr(repos: Repo[], substr: string) {
     substr = substr.toLowerCase();

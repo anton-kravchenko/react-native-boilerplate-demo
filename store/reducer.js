@@ -32,6 +32,11 @@ type ADD_REPOS_TO_COMPARE_LIST_ACTION = {
   payload: Repo[]
 };
 
+type REMOVE_REPO_FROM_COMPARE_LIST = {
+  type: "REMOVE_REPO_FROM_COMPARE_LIST",
+  payload: Repo
+};
+
 type REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST_ACTION = {
   type: "REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST",
   payload: Repo[]
@@ -50,12 +55,13 @@ export type Action =
   | ADD_REPO_TO_COMPARE_LIST_ACTION
   | ADD_REPOS_TO_COMPARE_LIST_ACTION
   | REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST_ACTION
-  | SET_FETCH_FAIL;
+  | SET_FETCH_FAIL
+  | REMOVE_REPO_FROM_COMPARE_LIST;
 
 //FIXME: uncomment
 // const reducer = (state: State, action: Action): State => {
 const reducer = (state: State, action: Action): State => {
-  console.log(action);
+  console.log(action.type);
   switch (action.type) {
     case "SET_ORG":
       return { ...state, org: action.payload };
@@ -79,9 +85,17 @@ const reducer = (state: State, action: Action): State => {
         projectsToCompare: [...state.projectsToCompare, action.payload]
       };
     case "ADD_REPOS_TO_COMPARE_LIST":
+      console.log("ADDING REPOS, ", action.payload);
       return {
         ...state,
         projectsToCompare: [...state.projectsToCompare, ...action.payload]
+      };
+    case "REMOVE_REPO_FROM_COMPARE_LIST":
+      return {
+        ...state,
+        projectsToCompare: state.projectsToCompare.filter(
+          r => r !== action.payload
+        )
       };
     case "REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST":
       return { ...state, projectsToCompare: [] };
