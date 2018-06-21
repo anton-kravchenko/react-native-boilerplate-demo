@@ -1,14 +1,19 @@
 // @flow
 
 import React, { Component } from "react";
+import { View, TextInput, StyleSheet, ListView } from "react-native";
+
 import {
-  View,
+  Container,
+  Header,
+  Content,
   Button,
-  TextInput,
-  StyleSheet,
-  ListView,
-  Text
-} from "react-native";
+  Text,
+  Input,
+  Item,
+  Icon,
+  Spinner
+} from "native-base";
 
 import store from "../store/store";
 
@@ -25,7 +30,9 @@ type GitReposState = {
   repos: Repo[],
   reposInFocus: Repo[],
   filterByStr: string,
-  projectsToCompare: Repo[]
+  projectsToCompare: Repo[],
+  fetchFailed: boolean,
+  fetchError: string
 };
 
 type GitRepoProps = {
@@ -39,7 +46,9 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       repos: [],
       reposInFocus: [],
       filterByStr: "",
-      projectsToCompare: []
+      projectsToCompare: [],
+      fetchFailed: false,
+      fetchError: ""
     };
   }
   componentDidMount() {
@@ -49,7 +58,9 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       this.setState({
         repos: storeState.projects,
         reposInFocus: storeState.projectsInFocus,
-        projectsToCompare: storeState.projectsToCompare
+        projectsToCompare: storeState.projectsToCompare,
+        fetchFailed: storeState.fetchFailed,
+        fetchError: storeState.fetchError
       });
     });
 
@@ -141,7 +152,9 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
   renderCompareAllButton() {
     return (
       <Button
-        title={"Compare all"}
+        bordered
+        success
+        style={{ alignSelf: "center" }}
         onPress={() => {
           store.dispatch({
             type: "ADD_REPOS_TO_COMPARE_LIST",
@@ -152,7 +165,9 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
           });
           // store.dispatch(push("/compare/"));
         }}
-      />
+      >
+        <Text>Compare all</Text>
+      </Button>
     );
   }
   render() {
@@ -160,7 +175,12 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     const { org } = this.props;
 
     if (!repos) {
-      return <Text>Loading repos from {org}...</Text>;
+      return (
+        <Container style={{ alignSelf: "center" }}>
+          <Text>Loading repos from {org}...</Text>;
+          <Spinner color="blue" />
+        </Container>
+      );
     }
 
     const filteredRepos = this.filterReposByStr(repos, filterByStr);
@@ -168,10 +188,14 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     return (
       <View style={styles.container}>
         <Text>Filter</Text>
-        <TextInput
-          onChangeText={(text) => this.setState({filterByStr :text})}
-          style={{ backgroundColor: "white", width: "80%", height: "5%" }}
-        />
+        <Item>
+          <Icon name="ios-search" />
+          <Input
+            placeholder="Project name"
+            onChangeText={text => this.setState({ filterByStr: text })}
+          />
+        </Item>
+
         <Text>Repos by {org}</Text>
         {this.renderRepos(filteredRepos, reposInFocus)}
         {/* {0 !== projectsToCompare.length && <CompareProjectsList />} */}

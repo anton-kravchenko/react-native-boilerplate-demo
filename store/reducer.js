@@ -1,6 +1,6 @@
 // @flow
 import type { State } from "./store";
-import type Repo from "../src/GitRepos";
+import type { Repo } from "../src/GitRepos";
 
 type SET_ORG_ACTION = {
   type: "SET_ORG",
@@ -37,6 +37,11 @@ type REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST_ACTION = {
   payload: Repo[]
 };
 
+type SET_FETCH_FAIL = {
+  type: "SET_FETCH_FAIL",
+  payload: string
+};
+
 export type Action =
   | SET_ORG_ACTION
   | SET_PROJECTS_ACTION
@@ -44,10 +49,11 @@ export type Action =
   | REMOVE_PROJECT_FOCUS_ACTION
   | ADD_REPO_TO_COMPARE_LIST_ACTION
   | ADD_REPOS_TO_COMPARE_LIST_ACTION
-  | REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST_ACTION;
+  | REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST_ACTION
+  | SET_FETCH_FAIL;
 
 //FIXME: uncomment
-  // const reducer = (state: State, action: Action): State => {
+// const reducer = (state: State, action: Action): State => {
 const reducer = (state: State, action: Action): State => {
   console.log(action);
   switch (action.type) {
@@ -55,6 +61,8 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, org: action.payload };
     case "SET_PROJECTS":
       return { ...state, projects: action.payload };
+    case "SET_FETCH_FAIL":
+      return { ...state, fetchFailed: true, fetchError: action.payload };
     case "SET_PROJECT_FOCUS":
       return {
         ...state,
