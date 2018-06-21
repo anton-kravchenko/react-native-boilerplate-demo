@@ -1,7 +1,6 @@
 // @flow
 
 import React, { Component } from "react";
-import { View, TextInput, StyleSheet, ListView } from "react-native";
 
 import {
   Container,
@@ -12,7 +11,10 @@ import {
   Input,
   Item,
   Icon,
-  Spinner
+  Spinner,
+  List,
+  ListItem,
+  ScrollView
 } from "native-base";
 
 import store from "../store/store";
@@ -130,20 +132,31 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     );
   }
   renderRepos(repos: Repo[], reposInFocus: Repo[]) {
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2
-    });
-
     return (
-      <ListView
-        dataSource={ds.cloneWithRows(repos)}
-        renderRow={repo =>
-          reposInFocus.includes(repo)
-            ? this.renderFullProjectInfo(repo)
-            : this.renderBriefRepoInfo(repo)
-        }
+      <List
+        dataArray={repos}
+        renderRow={r => (
+          <ListItem>
+            <Text>{r.name}</Text>
+          </ListItem>
+        )}
       />
     );
+
+    // const ds = new ListView.DataSource({
+    //   rowHasChanged: (r1, r2) => r1 !== r2
+    // });
+    //
+    // return (
+    //   <ListView
+    //     dataSource={ds.cloneWithRows(repos)}
+    //     renderRow={repo =>
+    //       reposInFocus.includes(repo)
+    //         ? this.renderFullProjectInfo(repo)
+    //         : this.renderBriefRepoInfo(repo)
+    //     }
+    //   />
+    // );
   }
   filterReposByStr(repos: Repo[], substr: string) {
     substr = substr.toLowerCase();
@@ -186,7 +199,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     const filteredRepos = this.filterReposByStr(repos, filterByStr);
 
     return (
-      <View style={styles.container}>
+      <Container>
         <Text>Filter</Text>
         <Item>
           <Icon name="ios-search" />
@@ -200,18 +213,18 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
         {this.renderRepos(filteredRepos, reposInFocus)}
         {/* {0 !== projectsToCompare.length && <CompareProjectsList />} */}
         {this.renderCompareAllButton()}
-      </View>
+      </Container>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center"
+//   }
+// });
 
 export default GitRepos;
