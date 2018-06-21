@@ -5,13 +5,13 @@ import GitProjectInfo from "./src/GitProjectInfo";
 import GitProjects from "./src/GitProjects";
 import { View } from "react-native";
 
-import GitReposExplorer from './src/GitReposExplorer';
-import GitRepos from './src/GitRepos';
+import GitReposExplorer from "./src/GitReposExplorer";
+import GitRepos from "./src/GitRepos";
 
 export default class App extends React.Component<{}, {}> {
   render() {
-    return <GitRepos org="google" />;
-    // return <GitReposExplorer />;
+    // return <GitRepos org="google" />;
+    return <GitReposExplorer />;
     return <GitProjects org="google" />;
 
     return (

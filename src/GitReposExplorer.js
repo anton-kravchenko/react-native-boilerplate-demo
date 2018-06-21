@@ -1,7 +1,18 @@
 // @flow
 
 import React, { Component } from "react";
-import { Text, View, Button, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
+import {
+  Container,
+  Header,
+  Content,
+  Button,
+  Text,
+  Input,
+  Item,
+  Icon
+} from "native-base";
+// import getTheme from '../native-base-theme/components';
 
 // import store from '../store/store';
 type Props = {
@@ -23,25 +34,23 @@ class GitReposExplorer extends Component<Props, State> {
   };
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Enter org</Text>
-        <TextInput
-          style={{ backgroundColor: "white", width: "80%", height: "5%" }}
-          onChangeText={text => this.setState({ org: text })}
-        />
-        <Button onClick={this.handleOrgSubmit} title="Submit" />
-      </View>
+      <Container>
+        <Header searchBar rounded>
+          <Item>
+            <Icon name="ios-search" />
+            <Input
+              placeholder="Project name"
+              onChangeText={text => this.setState({ org: text })}
+            />
+            <Icon name="ios-people" />
+          </Item>
+          <Button transparent onPress={this.handleOrgSubmit}>
+            <Text>Search</Text>
+          </Button>
+        </Header>
+      </Container>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
 
 export default GitReposExplorer;
