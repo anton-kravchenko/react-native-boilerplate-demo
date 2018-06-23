@@ -5,7 +5,9 @@
   "devDependencies": {
     "flow-bin": "^0.74.0",
     "flow-coverage-report": "^0.5.0",
+    "husky": "^0.14.3",
     "jest-expo": "~27.0.0",
+    "pretty-quick": "^1.6.0",
     "react-dom": "^16.4.1",
     "react-native-material-design": "^0.3.7",
     "react-native-scripts": "1.14.0",
@@ -21,9 +23,9 @@
     "jest": "jest --config jest.config.js",
     "test": "npm run jest -- --coverage",
     "test:watch": "npm run jest -- --watch",
-    "flow-coverage":
-      "flow-coverage-report -i 'src/**/*.{js,jsx}' -x 'src/test/**' -t html -t json -t text --threshold 80",
-    "format": "prettier --write *.{js,jsx}"
+    "flow-coverage": "flow-coverage-report -i 'src/**/*.{js,jsx}' -x 'src/test/**' -t html -t json -t text --threshold 80",
+    "format": "prettier --write *.{js,jsx}",
+    "precommit": "pretty-quick --staged"
   },
   "jest": {
     "preset": "jest-expo"
