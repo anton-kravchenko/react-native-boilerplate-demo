@@ -8,6 +8,8 @@ flow-typed
 /node_modules
 coverage/
 flow-coverage/
+package-lock.json
+yarn.lock
 
 # misc
 .env.local

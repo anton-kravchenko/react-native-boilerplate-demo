@@ -5,7 +5,7 @@ import {
   calcScoreForProject,
   calculateScoresForProjects,
   sortProjectsByScore
-} from "../src/projectsComparator";
+} from "../../src/projectsComparator";
 
 import type {
   RepoScoreIdTriple,
