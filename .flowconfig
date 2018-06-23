@@ -6,6 +6,7 @@ src/*
 store/*
 
 [libs]
+flow-typed
 
 [lints]
 

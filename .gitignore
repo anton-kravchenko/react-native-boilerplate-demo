@@ -6,6 +6,7 @@ flow-typed
 
 # dependencies
 /node_modules
+coverage/
 
 # misc
 .env.local
