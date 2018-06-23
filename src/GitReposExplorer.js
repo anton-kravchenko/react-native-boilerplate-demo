@@ -40,7 +40,13 @@ class GitReposExplorer extends Component<Props, State> {
   };
   render() {
     return (
-      <Container>
+      <Container
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
         <Item>
           <Icon name="ios-search" />
           <Input

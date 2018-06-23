@@ -90,7 +90,6 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       })
       .then(resp => resp.json())
       .then((repos: Repo[]) => {
-        console.log("1111", repos);
         store.dispatch({
           type: "SET_PROJECTS",
           payload: repos
@@ -199,7 +198,13 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
 
     if (0 === repos.length && false == fetchFailed) {
       return (
-        <Container style={{ alignSelf: "center" }}>
+        <Container
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
           <Text>{`Loading repos...`}</Text>;
           <Spinner color="blue" />
         </Container>
@@ -207,7 +212,13 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     }
     if (true === fetchFailed) {
       return (
-        <Container style={{ alignSelf: "center" }}>
+        <Container
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
           <Text>{`Error during fetch: ${fetchError}`}</Text>;
         </Container>
       );
