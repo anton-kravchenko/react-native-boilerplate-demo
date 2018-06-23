@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@expo/vector-icons": "^6.3.1",
+    "@types/react": "^16.4.0",
+    "@types/react-native": "^0.55.22",
     "babel-eslint": "^8.2.5",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react-app": "^2.1.0",
-    "eslint-plugin-fetch": "0.0.1",
     "eslint-plugin-flowtype": "^2.49.3",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
@@ -22,7 +24,6 @@
     "npm-run-all": "^4.1.3",
     "pretty-quick": "^1.6.0",
     "react-dom": "^16.4.1",
-    "react-native-material-design": "^0.3.7",
     "react-native-scripts": "1.14.0",
     "react-native-vector-icons": "^4.6.0",
     "react-test-renderer": "16.3.1"
@@ -37,19 +38,17 @@
     "test": "npm run jest -- --coverage",
     "test:watch": "npm run jest -- --watch",
     "flow-coverage": "flow-coverage-report -i 'src/**/*.{js,jsx}' -x 'src/test/**' -t html -t json -t text --threshold 80",
-    "format": "prettier --write *.{js,jsx}",
+    "prettier": "prettier --write *.{js,jsx}",
+    "format": "npm-run-all -s prettier lint:fix",
     "precommit": "pretty-quick --staged",
-    "check-health": "npm-run-all -s test format flow-coverage",
     "lint": "eslint -c .eslintrc.config.js src/*",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "check-health": "npm-run-all -s test format lint flow-coverage"
   },
   "jest": {
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@expo/vector-icons": "^6.3.1",
-    "@types/react": "^16.4.0",
-    "@types/react-native": "^0.55.22",
     "eslint": "^4.19.1",
     "expo": "^27.0.1",
     "flow": "^0.2.3",

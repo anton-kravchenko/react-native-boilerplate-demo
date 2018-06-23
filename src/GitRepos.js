@@ -176,10 +176,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
         style={{ alignSelf: "center", bottom: 20 }}
         onPress={() => this.props.navigation.navigate("Comparator")}
       >
-        <Text>
-          Compare
-          {selectedReposAmount}
-        </Text>
+        <Text>Compare {selectedReposAmount}</Text>
       </Button>
     );
   }
@@ -198,7 +195,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
         >
           <Text>Loading repos...</Text>
           ;
-          <Spinner color="blue" />
+          <Spinner color="green" />
         </Container>
       );
     }
