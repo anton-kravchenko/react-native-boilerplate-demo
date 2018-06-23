@@ -97,7 +97,6 @@ const reducer = (state: State, action: Action): State => {
         projectsToCompare: [...state.projectsToCompare, action.payload]
       };
     case "ADD_REPOS_TO_COMPARE_LIST":
-      console.log("ADDING REPOS, ", action.payload);
       return {
         ...state,
         projectsToCompare: [...state.projectsToCompare, ...action.payload]

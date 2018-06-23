@@ -25,10 +25,10 @@ import store from "../store/store";
 export type Repo = {
   name: string,
   full_name: string,
-  watchers: string,
-  stargazers_count: string,
-  open_issues_count: string,
-  forks_count: string
+  watchers: number,
+  stargazers_count: number,
+  open_issues_count: number,
+  forks_count: number
 };
 
 type GitReposState = {
@@ -81,13 +81,27 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
   }
   fetchReposByOrg(org: string) {
     fetch(this.generateGetReposByOrgUrl(org))
+      .then(async resp => {
+        if (resp.status !== 200) {
+          throw Error((await resp.json()).message);
+        } else {
+          return resp;
+        }
+      })
       .then(resp => resp.json())
-      .then((repos: Repo[]) =>
+      .then((repos: Repo[]) => {
+        console.log("1111", repos);
         store.dispatch({
           type: "SET_PROJECTS",
           payload: repos
-        })
-      );
+        });
+      })
+      .catch(e => {
+        this.setState({
+          fetchFailed: true,
+          fetchError: e.message
+        });
+      });
   }
   addToCompare(repo: Repo) {
     store.dispatch({
@@ -155,7 +169,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     substr = substr.toLowerCase();
     return repos.filter(repo => repo.name.toLowerCase().includes(substr));
   }
-  renderCompareAllButton() {
+  renderCompareButton() {
     const selectedReposAmount = this.state.projectsToCompare.length;
     if (selectedReposAmount < 2) {
       return null;
@@ -165,17 +179,8 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
         bordered
         success
         active={false}
-        style={{ alignSelf: "center" }}
-        onPress={() => {
-          store.dispatch({
-            type: "ADD_REPOS_TO_COMPARE_LIST",
-            payload: this.filterReposByStr(
-              this.state.repos,
-              this.state.filterByStr
-            )
-          });
-          // store.dispatch(push("/compare/"));
-        }}
+        style={{ alignSelf: "center", bottom: 20 }}
+        onPress={() => this.props.navigation.navigate("Comparator")}
       >
         <Text>Compare {selectedReposAmount}</Text>
       </Button>
@@ -187,14 +192,23 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       reposInFocus,
       filterByStr,
       projectsToCompare,
-      org
+      org,
+      fetchFailed,
+      fetchError
     } = this.state;
 
-    if (!repos) {
+    if (0 === repos.length && false == fetchFailed) {
       return (
         <Container style={{ alignSelf: "center" }}>
-          <Text>Loading repos from {org}...</Text>;
+          <Text>{`Loading repos...`}</Text>;
           <Spinner color="blue" />
+        </Container>
+      );
+    }
+    if (true === fetchFailed) {
+      return (
+        <Container style={{ alignSelf: "center" }}>
+          <Text>{`Error during fetch: ${fetchError}`}</Text>;
         </Container>
       );
     }
@@ -203,7 +217,6 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
 
     return (
       <Container>
-        <Text>Filter</Text>
         <Item>
           <Icon name="ios-search" />
           <Input
@@ -211,11 +224,9 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
             onChangeText={text => this.setState({ filterByStr: text })}
           />
         </Item>
-
-        <Text>Repos by {org}</Text>
+        <Text style={{ textAlign: "center" }}>Repos by {org}</Text>
         {this.renderRepos(filteredRepos, reposInFocus)}
-        {/* {0 !== projectsToCompare.length && <CompareProjectsList />} */}
-        {this.renderCompareAllButton()}
+        {this.renderCompareButton()}
       </Container>
     );
   }

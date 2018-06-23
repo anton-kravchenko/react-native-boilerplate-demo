@@ -41,18 +41,22 @@ class GitReposExplorer extends Component<Props, State> {
   render() {
     return (
       <Container>
-        <Header searchBar rounded>
-          <Item>
-            <Icon name="ios-search" />
-            <Input
-              placeholder="Project name"
-              onChangeText={text => this.setState({ org: text })}
-            />
-          </Item>
-          <Button transparent onPress={this.handleOrgSubmit}>
-            <Text>Search</Text>
-          </Button>
-        </Header>
+        <Item>
+          <Icon name="ios-search" />
+          <Input
+            placeholder="Project name"
+            onChangeText={text => this.setState({ org: text })}
+          />
+        </Item>
+
+        <Button
+          style={{ alignSelf: "center", top: 20 }}
+          bordered
+          success
+          onPress={this.handleOrgSubmit}
+        >
+          <Text>Search</Text>
+        </Button>
       </Container>
     );
   }

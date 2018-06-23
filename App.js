@@ -6,17 +6,15 @@ import { View, Text } from "react-native";
 
 import GitReposExplorer from "./src/GitReposExplorer";
 import GitRepos from "./src/GitRepos";
+import GitReposComparator from "./src/GitProjectsComparator";
+
 import { createStackNavigator } from "react-navigation";
 
 import { StackNavigator } from "react-navigation";
 
 class DetailsScreen extends React.Component<{}> {
   render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Details Screen</Text>
-      </View>
-    );
+    return <Text>Details Screen</Text>;
   }
 }
 
@@ -27,6 +25,10 @@ const RootStack = createStackNavigator({
   },
   Projects: {
     screen: GitRepos,
+    Details: DetailsScreen
+  },
+  Comparator: {
+    screen: GitReposComparator,
     Details: DetailsScreen
   }
 });
