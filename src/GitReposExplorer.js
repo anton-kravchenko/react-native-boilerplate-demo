@@ -2,11 +2,8 @@
 
 import React, { Component } from "react";
 
-import { View, TextInput, StyleSheet } from "react-native";
 import {
   Container,
-  Header,
-  Content,
   Button,
   Text,
   Input,
@@ -15,17 +12,14 @@ import {
   // @$FlowFixMe
 } from "native-base";
 
-import GitRepos from "./GitRepos";
 import store from "../store/store";
-
-type Props = { org?: string } & GitReposExplorer;
 
 type State = {
   org: string
 };
 
-class GitReposExplorer extends Component<Props, State> {
-  constructor(props: Props) {
+class GitReposExplorer extends Component<{}, State> {
+  constructor(props: empty) {
     super(props);
 
     this.state = {
@@ -38,6 +32,7 @@ class GitReposExplorer extends Component<Props, State> {
       type: "SET_ORGANIZATION_NAME",
       payload: this.state.org
     });
+    // eslint-disable-next-line react/prop-types
     this.props.navigation.navigate("Projects");
   };
 

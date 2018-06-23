@@ -1,6 +1,6 @@
 // @flow
 
-import type { Repo } from "./GitRepos";
+import type { Repo } from "./Repo";
 
 const STARS_WEIGHT = 1;
 const FORKS_WEIGHT = 0.9;

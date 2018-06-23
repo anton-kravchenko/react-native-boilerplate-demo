@@ -1,6 +1,6 @@
 // @flow
 import type { State } from "./store";
-import type { Repo } from "../src/GitRepos";
+import type { Repo } from "../src/Repo";
 
 type SET_ORG_ACTION = {
   type: "SET_ORG",
@@ -102,9 +102,7 @@ const reducer = (state: State, action: Action): State => {
     case "REMOVE_REPO_FROM_COMPARE_LIST":
       return {
         ...state,
-        projectsToCompare: state.projectsToCompare.filter(
-          r => r !== action.payload
-        )
+        projectsToCompare: state.projectsToCompare.filter(r => r !== action.payload)
       };
     case "REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST":
       return { ...state, projectsToCompare: [] };

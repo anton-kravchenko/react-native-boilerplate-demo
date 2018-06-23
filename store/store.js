@@ -2,7 +2,7 @@
 
 import { applyMiddleware, compose, createStore } from "redux";
 
-import type { Repo } from "../src/GitRepos";
+import type { Repo } from "../src/Repo";
 import reducer from "./reducer";
 
 export type State = {

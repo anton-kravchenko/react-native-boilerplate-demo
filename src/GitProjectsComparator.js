@@ -4,18 +4,11 @@ import React, { Component } from "react";
 
 import {
   Container,
-  Header,
-  Content,
-  Button,
   Text,
-  Input,
   Item,
   Icon,
-  Spinner,
   List,
   ListItem,
-  ScrollView,
-  CheckBox,
   Card,
   CardItem
   // $FlowFixMe
@@ -31,8 +24,6 @@ type State = {
 };
 
 class GitRepos extends Component<{}, State> {
-  state: State;
-
   constructor(props: empty) {
     super(props);
     this.state = {

@@ -4,8 +4,6 @@ import React, { Component } from "react";
 
 import {
   Container,
-  Header,
-  Content,
   Button,
   Text,
   Input,
@@ -14,28 +12,18 @@ import {
   Spinner,
   List,
   ListItem,
-  ScrollView,
-  Body,
-  CheckBox
+  Body
   // $FlowFixMe
 } from "native-base";
 
+// eslint-disable-next-line import/no-unresolved
 import type { NavigationScreenProp } from "react-navigation/src/TypeDefinition";
 import store from "../store/store";
-import type { Store } from "../store/store";
 
-export type Repo = {
-  name: string,
-  full_name: string,
-  watchers: number,
-  stargazers_count: number,
-  open_issues_count: number,
-  forks_count: number
-};
+import type { Repo } from "./Repo";
 
 type GitReposState = {
   repos: Repo[],
-  reposInFocus: Repo[],
   filterByStr: string,
   projectsToCompare: Repo[],
   fetchFailed: boolean,
@@ -46,13 +34,10 @@ type GitReposState = {
 type GitRepoProps = NavigationScreenProp<any>;
 
 class GitRepos extends Component<GitRepoProps, GitReposState> {
-  state: GitReposState;
-
   constructor(props: GitRepoProps) {
     super(props);
     this.state = {
       repos: [],
-      reposInFocus: [],
       filterByStr: "",
       projectsToCompare: [],
       fetchFailed: false,
@@ -67,7 +52,6 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       const storeState = store.getState();
       this.setState({
         repos: storeState.projects,
-        reposInFocus: storeState.projectsInFocus,
         projectsToCompare: storeState.projectsToCompare,
         fetchFailed: storeState.fetchFailed,
         fetchError: storeState.fetchError,
@@ -88,6 +72,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
   }
 
   fetchReposByOrg(org: string) {
+    // eslint-disable-next-line no-undef
     fetch(this.generateGetReposByOrgUrl(org))
       .then(async resp => {
         if (resp.status !== 200) {
@@ -141,7 +126,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
   }
 
   toggleProjectListItem = (repo: Repo) => {
-    const projectsToCompare = this.state.projectsToCompare;
+    const { projectsToCompare } = this.state;
 
     if (projectsToCompare.includes(repo)) {
       store.dispatch({
@@ -156,7 +141,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     }
   };
 
-  renderRepos(repos: Repo[], reposInFocus: Repo[]) {
+  renderRepos(repos: Repo[]) {
     const selectedRepos = this.state.projectsToCompare;
     const notSelected = repos.filter(r => selectedRepos.indexOf(r) === -1);
     return (
@@ -174,8 +159,8 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
   }
 
   filterReposByStr(repos: Repo[], substr: string) {
-    substr = substr.toLowerCase();
-    return repos.filter(repo => repo.name.toLowerCase().includes(substr));
+    const subStrLowerCase = substr.toLowerCase();
+    return repos.filter(repo => repo.name.toLowerCase().includes(subStrLowerCase));
   }
 
   renderCompareButton() {
@@ -200,17 +185,9 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
   }
 
   render() {
-    const {
-      repos,
-      reposInFocus,
-      filterByStr,
-      projectsToCompare,
-      org,
-      fetchFailed,
-      fetchError
-    } = this.state;
+    const { repos, filterByStr, org, fetchFailed, fetchError } = this.state;
 
-    if (repos.length === 0 && fetchFailed == false) {
+    if (repos.length === 0 && fetchFailed === false) {
       return (
         <Container
           style={{
@@ -255,7 +232,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
           Repos by
           {org}
         </Text>
-        {this.renderRepos(filteredRepos, reposInFocus)}
+        {this.renderRepos(filteredRepos)}
         {this.renderCompareButton()}
       </Container>
     );

@@ -6,10 +6,11 @@ module.exports = {
     "prettier/flowtype",
     "prettier/react"
   ],
-  plugins: ["flowtype"]
+  plugins: ["flowtype"],
+  rules: {
+    "class-methods-use-this": 0,
+    "react/destructuring-assignment": 0,
+    "react/sort-comp": 0,
+    "react/jsx-filename-extension": 0
+  }
 };
-// module.exports = {
-//   extends: ["prettier", "prettier/flowtype", "prettier/react", "airbnb"],
-//   plugins: ["flowtype"],
-//   parser: ["babel-eslint"]
-// };
