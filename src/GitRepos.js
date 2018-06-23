@@ -129,11 +129,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     });
   };
   renderBriefRepoInfo(repo: Repo) {
-    return (
-      <Text onPress={() => this.projectBriefInfoOnClick(repo)}>
-        {repo.name}
-      </Text>
-    );
+    return <Text onPress={() => this.projectBriefInfoOnClick(repo)}>{repo.name}</Text>;
   }
   toggleProjectListItem = (repo: Repo) => {
     const projectsToCompare = this.state.projectsToCompare;
@@ -236,9 +232,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
           <Icon name="ios-search" />
           <Input
             placeholder="Project name"
-            onChangeText={(text: string) =>
-              this.setState({ filterByStr: text })
-            }
+            onChangeText={(text: string) => this.setState({ filterByStr: text })}
           />
         </Item>
         <Text style={{ textAlign: "center" }}>Repos by {org}</Text>

@@ -34,9 +34,8 @@ const calculateScoresForProjects = (repos: Repo[]): RepoScorePair[] => {
   });
 };
 
-const sortProjectsByScore = (
-  repoScorePairs: RepoScorePair[]
-): RepoScorePair[] => repoScorePairs.slice().sort((a, b) => b.score - a.score);
+const sortProjectsByScore = (repoScorePairs: RepoScorePair[]): RepoScorePair[] =>
+  repoScorePairs.slice().sort((a, b) => b.score - a.score);
 
 const getSorterProjectsWithScores = (repos: Repo[]): RepoScoreIdTriple[] =>
   sortProjectsByScore(calculateScoresForProjects(repos)).map((rs, id) => {

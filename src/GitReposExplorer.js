@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from "react";
+
 import { View, TextInput, StyleSheet } from "react-native";
 import {
   Container,
@@ -26,6 +27,7 @@ type State = {
 class GitReposExplorer extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
     this.state = {
       org: ""
     };

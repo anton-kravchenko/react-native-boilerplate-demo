@@ -45,9 +45,7 @@ class GitRepos extends Component<{}, State> {
     this.setState({ repos: storeState.projectsToCompare });
   }
   renderRepos(repos: Repo[]) {
-    const sortedProjects: RepoScoreIdTriple[] = getSorterProjectsWithScores(
-      repos
-    );
+    const sortedProjects: RepoScoreIdTriple[] = getSorterProjectsWithScores(repos);
 
     return (
       <List
@@ -96,9 +94,7 @@ class GitRepos extends Component<{}, State> {
                 <CardItem bordered>
                   <Item>
                     <Icon name="ladybug" type="MaterialCommunityIcons" />
-                    <Text>{`Open issues count: ${
-                      repo.open_issues_count
-                    }`}</Text>
+                    <Text>{`Open issues count: ${repo.open_issues_count}`}</Text>
                   </Item>
                 </CardItem>
               </Card>

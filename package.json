@@ -21,8 +21,9 @@
     "jest": "jest --config jest.config.js",
     "test": "npm run jest -- --coverage",
     "test:watch": "npm run jest -- --watch",
-    "flow-coverage": "flow-coverage-report -i 'src/**/*.{js,jsx}' -x 'src/test/**' -t html -t json -t text --threshold 90",
-    "format": "prettier"
+    "flow-coverage":
+      "flow-coverage-report -i 'src/**/*.{js,jsx}' -x 'src/test/**' -t html -t json -t text --threshold 80",
+    "format": "prettier --write *.{js,jsx}"
   },
   "jest": {
     "preset": "jest-expo"
