@@ -19,6 +19,7 @@ import {
   CheckBox
 } from "native-base";
 
+import _ from "underscore";
 import store from "../store/store";
 
 export type Repo = {
@@ -149,17 +150,14 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     }
   };
   renderRepos(repos: Repo[], reposInFocus: Repo[]) {
+    const selectedRepos = this.state.projectsToCompare;
+    const notSelected = repos.filter(r => -1 === selectedRepos.indexOf(r));
     return (
       <List
-        dataArray={repos}
+        dataArray={notSelected}
         renderRow={repo => {
           return (
-            <ListItem>
-              <CheckBox
-                checked={this.state.projectsToCompare.includes(repo)}
-                onPress={() => this.toggleProjectListItem(repo)}
-                color="green"
-              />
+            <ListItem onPress={() => this.toggleProjectListItem(repo)}>
               <Body>
                 <Text>{repo.name}</Text>
               </Body>
