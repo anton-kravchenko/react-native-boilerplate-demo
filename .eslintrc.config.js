@@ -1,5 +1,11 @@
 module.exports = {
-  extends: ["plugin:flowtype/recommended", "airbnb"],
+  extends: [
+    "plugin:flowtype/recommended",
+    "airbnb",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
+  ],
   plugins: ["flowtype"]
 };
 // module.exports = {

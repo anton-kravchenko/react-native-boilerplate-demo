@@ -219,7 +219,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
             alignItems: "center"
           }}
         >
-          <Text>{"Loading repos..."}</Text>
+          <Text>Loading repos...</Text>
           ;
           <Spinner color="blue" />
         </Container>
