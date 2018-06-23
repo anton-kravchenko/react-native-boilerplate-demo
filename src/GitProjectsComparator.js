@@ -18,6 +18,7 @@ import {
   CheckBox,
   Card,
   CardItem
+  // $FlowFixMe
 } from "native-base";
 
 import store from "../store/store";
@@ -30,6 +31,8 @@ type State = {
 };
 
 class GitRepos extends Component<{}, State> {
+  state: State;
+
   constructor(props: empty) {
     super(props);
     this.state = {
@@ -49,7 +52,7 @@ class GitRepos extends Component<{}, State> {
     return (
       <List
         dataArray={sortedProjects}
-        renderRow={(rsp: RepoScoreIdTriple, key) => {
+        renderRow={(rsp: RepoScoreIdTriple) => {
           const { repo, score, id } = rsp;
           return (
             <ListItem>

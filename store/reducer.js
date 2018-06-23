@@ -65,8 +65,6 @@ export type Action =
   | REMOVE_REPO_FROM_COMPARE_LIST
   | SET_ORGANIZATION_NAME;
 
-//FIXME: uncomment
-// const reducer = (state: State, action: Action): State => {
 const reducer = (state: State, action: Action): State => {
   console.log(action.type);
   switch (action.type) {

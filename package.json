@@ -4,7 +4,9 @@
   "private": true,
   "devDependencies": {
     "flow-bin": "^0.74.0",
+    "flow-coverage-report": "^0.5.0",
     "jest-expo": "~27.0.0",
+    "react-dom": "^16.4.1",
     "react-native-material-design": "^0.3.7",
     "react-native-scripts": "1.14.0",
     "react-native-vector-icons": "^4.6.0",
@@ -19,6 +21,8 @@
     "jest": "jest --config jest.config.js",
     "test": "npm run jest -- --coverage",
     "test:watch": "npm run jest -- --watch",
+    "flow-coverage":
+      "flow-coverage-report -i 'src/**/*.{js,jsx}' -x 'src/test/**' -t html -t json -t text --threshold 90",
     "format": "prettier"
   },
   "jest": {

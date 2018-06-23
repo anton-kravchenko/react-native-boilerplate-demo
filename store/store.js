@@ -26,11 +26,11 @@ const defaultState: State = {
 };
 
 import type { Store as ReduxStore, Dispatch as ReduxDispatch } from "redux";
-
 import type { Action } from "./reducer";
 export type Store = ReduxStore<State, Action>;
 export type GetState = () => State;
 
+// @$FlowFixMe
 const store = createStore(reducer, defaultState);
 
 export default store;

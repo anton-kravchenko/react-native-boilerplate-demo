@@ -11,14 +11,14 @@ import {
   Input,
   Item,
   Icon
+  // @$FlowFixMe
 } from "native-base";
+
 import GitRepos from "./GitRepos";
 import store from "../store/store";
 
-// import store from '../store/store';
-type Props = {
-  org?: string
-};
+type Props = { org?: string } & GitReposExplorer;
+
 type State = {
   org: string
 };
@@ -36,7 +36,6 @@ class GitReposExplorer extends Component<Props, State> {
       payload: this.state.org
     });
     this.props.navigation.navigate("Projects");
-    //   store.dispatch(push(`/repos/${this.state.org}/`));
   };
   render() {
     return (
@@ -51,7 +50,7 @@ class GitReposExplorer extends Component<Props, State> {
           <Icon name="ios-search" />
           <Input
             placeholder="Project name"
-            onChangeText={text => this.setState({ org: text })}
+            onChangeText={(text: string) => this.setState({ org: text })}
           />
         </Item>
 

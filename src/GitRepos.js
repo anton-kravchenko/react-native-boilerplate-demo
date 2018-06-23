@@ -17,10 +17,12 @@ import {
   ScrollView,
   Body,
   CheckBox
+  //$FlowFixMe
 } from "native-base";
 
-import _ from "underscore";
+import type { NavigationScreenProp } from "react-navigation/src/TypeDefinition";
 import store from "../store/store";
+import type { Store } from "../store/store";
 
 export type Repo = {
   name: string,
@@ -41,9 +43,11 @@ type GitReposState = {
   org: string
 };
 
-type GitRepoProps = {};
+type GitRepoProps = NavigationScreenProp<any>;
 
 class GitRepos extends Component<GitRepoProps, GitReposState> {
+  state: GitReposState;
+
   constructor(props: GitRepoProps) {
     super(props);
     this.state = {
@@ -152,7 +156,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     return (
       <List
         dataArray={notSelected}
-        renderRow={repo => {
+        renderRow={(repo: Repo) => {
           return (
             <ListItem onPress={() => this.toggleProjectListItem(repo)}>
               <Body>
@@ -232,7 +236,9 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
           <Icon name="ios-search" />
           <Input
             placeholder="Project name"
-            onChangeText={text => this.setState({ filterByStr: text })}
+            onChangeText={(text: string) =>
+              this.setState({ filterByStr: text })
+            }
           />
         </Item>
         <Text style={{ textAlign: "center" }}>Repos by {org}</Text>

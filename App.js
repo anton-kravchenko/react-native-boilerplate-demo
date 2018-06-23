@@ -8,9 +8,8 @@ import GitReposExplorer from "./src/GitReposExplorer";
 import GitRepos from "./src/GitRepos";
 import GitReposComparator from "./src/GitProjectsComparator";
 
+// $FlowFixMe
 import { createStackNavigator } from "react-navigation";
-
-import { StackNavigator } from "react-navigation";
 
 class DetailsScreen extends React.Component<{}> {
   render() {
@@ -38,17 +37,3 @@ export default class App extends React.Component<{}> {
     return <RootStack />;
   }
 }
-// class App extends React.Component<{}, {}> {
-//   render() {
-//     // return <GitRepos org="google" />;
-//     return <GitReposExplorer />;
-//     return <GitProjects org="google" />;
-//
-//     return (
-//       <View>
-//         <GitProjectInfo url="https://api.github.com/repos/facebook/react" />
-//         <GitProjects url="https://api.github.com/orgs/google/repos" />
-//       </View>
-//     );
-//   }
-// }
