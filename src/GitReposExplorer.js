@@ -13,31 +13,32 @@ import {
   Icon
 } from "native-base";
 import GitRepos from "./GitRepos";
+import store from "../store/store";
 
 // import store from '../store/store';
 type Props = {
   org?: string
 };
 type State = {
-  org: string,
-  submitted: boolean
+  org: string
 };
 
 class GitReposExplorer extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      org: "",
-      submitted: false
+      org: ""
     };
   }
   handleOrgSubmit = (): void => {
-    this.setState({ submitted: true });
+    store.dispatch({
+      type: "SET_ORGANIZATION_NAME",
+      payload: this.state.org
+    });
+    this.props.navigation.navigate("Projects");
     //   store.dispatch(push(`/repos/${this.state.org}/`));
   };
   render() {
-    const { submitted, org } = this.state;
-
     return (
       <Container>
         <Header searchBar rounded>
@@ -52,8 +53,6 @@ class GitReposExplorer extends Component<Props, State> {
             <Text>Search</Text>
           </Button>
         </Header>
-        // {submitted && <GitRepos org={org} />}
-        {<GitRepos org={"Google"} />}
       </Container>
     );
   }

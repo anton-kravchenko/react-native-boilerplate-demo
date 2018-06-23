@@ -13,7 +13,8 @@ export type State = {
   projectsInFocus: Repo[],
   projectsToCompare: Repo[],
   fetchFailed: boolean,
-  fetchError: string
+  fetchError: string,
+  organizationName: string
 };
 
 const defaultState: State = {
@@ -22,7 +23,8 @@ const defaultState: State = {
   projectsInFocus: [],
   projectsToCompare: [],
   fetchFailed: false,
-  fetchError: ""
+  fetchError: "",
+  organizationName: ""
 };
 
 // const history = createBrowserHistory();

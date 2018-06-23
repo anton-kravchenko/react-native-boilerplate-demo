@@ -41,9 +41,15 @@ type REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST_ACTION = {
   type: "REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST",
   payload: Repo[]
 };
+//fixme rename to action
 
 type SET_FETCH_FAIL = {
   type: "SET_FETCH_FAIL",
+  payload: string
+};
+//fixme rename to action
+type SET_ORGANIZATION_NAME = {
+  type: "SET_ORGANIZATION_NAME",
   payload: string
 };
 
@@ -56,7 +62,8 @@ export type Action =
   | ADD_REPOS_TO_COMPARE_LIST_ACTION
   | REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST_ACTION
   | SET_FETCH_FAIL
-  | REMOVE_REPO_FROM_COMPARE_LIST;
+  | REMOVE_REPO_FROM_COMPARE_LIST
+  | SET_ORGANIZATION_NAME;
 
 //FIXME: uncomment
 // const reducer = (state: State, action: Action): State => {
@@ -67,6 +74,11 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, org: action.payload };
     case "SET_PROJECTS":
       return { ...state, projects: action.payload };
+    case "SET_ORGANIZATION_NAME":
+      return {
+        ...state,
+        organizationName: action.payload
+      };
     case "SET_FETCH_FAIL":
       return { ...state, fetchFailed: true, fetchError: action.payload };
     case "SET_PROJECT_FOCUS":

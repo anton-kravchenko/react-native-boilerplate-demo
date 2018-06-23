@@ -37,12 +37,11 @@ type GitReposState = {
   filterByStr: string,
   projectsToCompare: Repo[],
   fetchFailed: boolean,
-  fetchError: string
-};
-
-type GitRepoProps = {
+  fetchError: string,
   org: string
 };
+
+type GitRepoProps = {};
 
 class GitRepos extends Component<GitRepoProps, GitReposState> {
   constructor(props: GitRepoProps) {
@@ -53,7 +52,8 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       filterByStr: "",
       projectsToCompare: [],
       fetchFailed: false,
-      fetchError: ""
+      fetchError: "",
+      org: ""
     };
   }
   componentDidMount() {
@@ -65,11 +65,12 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
         reposInFocus: storeState.projectsInFocus,
         projectsToCompare: storeState.projectsToCompare,
         fetchFailed: storeState.fetchFailed,
-        fetchError: storeState.fetchError
+        fetchError: storeState.fetchError,
+        org: storeState.organizationName
       });
     });
 
-    this.fetchReposByOrg(this.props.org);
+    this.fetchReposByOrg(store.getState().organizationName);
   }
   componentWillUnmount() {
     store.dispatch({ type: "REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST" });
@@ -117,23 +118,6 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       </Text>
     );
   }
-  renderFullProjectInfo(repo: Repo) {
-    return (
-      <View>
-        <View onPress={() => this.projectFullInfoOnClick(repo)}>
-          <Text>Name {repo.name}</Text>
-          <Text>Full name {repo.full_name}</Text>
-          <Text>Wathcers count {repo.watchers}</Text>
-          <Text>Stars count {repo.stargazers_count}</Text>
-          <Text>Open issues count {repo.open_issues_count}</Text>
-          <Text>Forks count {repo.forks_count}</Text>
-        </View>
-        {false === this.state.projectsToCompare.includes(repo) && (
-          <Button title={"Compare"} onPress={() => this.addToCompare(repo)} />
-        )}
-      </View>
-    );
-  }
   toggleProjectListItem = (repo: Repo) => {
     const projectsToCompare = this.state.projectsToCompare;
 
@@ -172,10 +156,15 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     return repos.filter(repo => repo.name.toLowerCase().includes(substr));
   }
   renderCompareAllButton() {
+    const selectedReposAmount = this.state.projectsToCompare.length;
+    if (selectedReposAmount < 2) {
+      return null;
+    }
     return (
       <Button
         bordered
         success
+        active={false}
         style={{ alignSelf: "center" }}
         onPress={() => {
           store.dispatch({
@@ -188,13 +177,18 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
           // store.dispatch(push("/compare/"));
         }}
       >
-        <Text>Compare all</Text>
+        <Text>Compare {selectedReposAmount}</Text>
       </Button>
     );
   }
   render() {
-    const { repos, reposInFocus, filterByStr, projectsToCompare } = this.state;
-    const { org } = this.props;
+    const {
+      repos,
+      reposInFocus,
+      filterByStr,
+      projectsToCompare,
+      org
+    } = this.state;
 
     if (!repos) {
       return (
@@ -226,14 +220,5 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center"
-//   }
-// });
 
 export default GitRepos;
