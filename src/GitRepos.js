@@ -17,7 +17,7 @@ import {
   ScrollView,
   Body,
   CheckBox
-  //$FlowFixMe
+  // $FlowFixMe
 } from "native-base";
 
 import type { NavigationScreenProp } from "react-navigation/src/TypeDefinition";
@@ -60,6 +60,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       org: ""
     };
   }
+
   componentDidMount() {
     // this.unsubscribe = store.subscribe(() => {
     store.subscribe(() => {
@@ -76,13 +77,16 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
 
     this.fetchReposByOrg(store.getState().organizationName);
   }
+
   componentWillUnmount() {
     store.dispatch({ type: "REMOVE_ALL_PROJECTS_FROM_COMPARE_LIST" });
     // this.unsubscribe();
   }
+
   generateGetReposByOrgUrl(org: string) {
     return `https://api.github.com/orgs/${org}/repos`;
   }
+
   fetchReposByOrg(org: string) {
     fetch(this.generateGetReposByOrgUrl(org))
       .then(async resp => {
@@ -106,6 +110,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
         });
       });
   }
+
   addToCompare(repo: Repo) {
     store.dispatch({
       type: "ADD_REPO_TO_COMPARE_LIST",
@@ -116,21 +121,25 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       payload: repo
     });
   }
+
   projectBriefInfoOnClick = (repo: Repo) => {
     store.dispatch({
       type: "SET_PROJECT_FOCUS",
       payload: repo
     });
   };
+
   projectFullInfoOnClick = (repo: Repo) => {
     store.dispatch({
       type: "REMOVE_PROJECT_FOCUS",
       payload: repo
     });
   };
+
   renderBriefRepoInfo(repo: Repo) {
     return <Text onPress={() => this.projectBriefInfoOnClick(repo)}>{repo.name}</Text>;
   }
+
   toggleProjectListItem = (repo: Repo) => {
     const projectsToCompare = this.state.projectsToCompare;
 
@@ -146,28 +155,29 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       });
     }
   };
+
   renderRepos(repos: Repo[], reposInFocus: Repo[]) {
     const selectedRepos = this.state.projectsToCompare;
-    const notSelected = repos.filter(r => -1 === selectedRepos.indexOf(r));
+    const notSelected = repos.filter(r => selectedRepos.indexOf(r) === -1);
     return (
       <List
         dataArray={notSelected}
-        renderRow={(repo: Repo) => {
-          return (
-            <ListItem onPress={() => this.toggleProjectListItem(repo)}>
-              <Body>
-                <Text>{repo.name}</Text>
-              </Body>
-            </ListItem>
-          );
-        }}
+        renderRow={(repo: Repo) => (
+          <ListItem onPress={() => this.toggleProjectListItem(repo)}>
+            <Body>
+              <Text>{repo.name}</Text>
+            </Body>
+          </ListItem>
+        )}
       />
     );
   }
+
   filterReposByStr(repos: Repo[], substr: string) {
     substr = substr.toLowerCase();
     return repos.filter(repo => repo.name.toLowerCase().includes(substr));
   }
+
   renderCompareButton() {
     const selectedReposAmount = this.state.projectsToCompare.length;
     if (selectedReposAmount < 2) {
@@ -181,10 +191,14 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
         style={{ alignSelf: "center", bottom: 20 }}
         onPress={() => this.props.navigation.navigate("Comparator")}
       >
-        <Text>Compare {selectedReposAmount}</Text>
+        <Text>
+          Compare
+          {selectedReposAmount}
+        </Text>
       </Button>
     );
   }
+
   render() {
     const {
       repos,
@@ -196,7 +210,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
       fetchError
     } = this.state;
 
-    if (0 === repos.length && false == fetchFailed) {
+    if (repos.length === 0 && fetchFailed == false) {
       return (
         <Container
           style={{
@@ -205,12 +219,13 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
             alignItems: "center"
           }}
         >
-          <Text>{`Loading repos...`}</Text>;
+          <Text>{"Loading repos..."}</Text>
+          ;
           <Spinner color="blue" />
         </Container>
       );
     }
-    if (true === fetchFailed) {
+    if (fetchFailed === true) {
       return (
         <Container
           style={{
@@ -219,7 +234,8 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
             alignItems: "center"
           }}
         >
-          <Text>{`Error during fetch: ${fetchError}`}</Text>;
+          <Text>{`Error during fetch: ${fetchError}`}</Text>
+          ;
         </Container>
       );
     }
@@ -235,7 +251,10 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
             onChangeText={(text: string) => this.setState({ filterByStr: text })}
           />
         </Item>
-        <Text style={{ textAlign: "center" }}>Repos by {org}</Text>
+        <Text style={{ textAlign: "center" }}>
+          Repos by
+          {org}
+        </Text>
         {this.renderRepos(filteredRepos, reposInFocus)}
         {this.renderCompareButton()}
       </Container>

@@ -32,6 +32,7 @@ class GitReposExplorer extends Component<Props, State> {
       org: ""
     };
   }
+
   handleOrgSubmit = (): void => {
     store.dispatch({
       type: "SET_ORGANIZATION_NAME",
@@ -39,6 +40,7 @@ class GitReposExplorer extends Component<Props, State> {
     });
     this.props.navigation.navigate("Projects");
   };
+
   render() {
     return (
       <Container

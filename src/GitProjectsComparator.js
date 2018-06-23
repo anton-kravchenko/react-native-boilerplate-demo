@@ -39,11 +39,13 @@ class GitRepos extends Component<{}, State> {
       repos: []
     };
   }
+
   componentDidMount() {
     // this.unsubscribe = store.subscribe(() => {
     const storeState = store.getState();
     this.setState({ repos: storeState.projectsToCompare });
   }
+
   renderRepos(repos: Repo[]) {
     const sortedProjects: RepoScoreIdTriple[] = getSorterProjectsWithScores(repos);
 
@@ -104,6 +106,7 @@ class GitRepos extends Component<{}, State> {
       />
     );
   }
+
   render() {
     const { repos } = this.state;
 
