@@ -11,6 +11,7 @@ module.exports = {
     "class-methods-use-this": 0,
     "react/destructuring-assignment": 0,
     "react/sort-comp": 0,
-    "react/jsx-filename-extension": 0
+    "react/jsx-filename-extension": 0,
+    "flowtype/require-valid-file-annotation": [2, "always"]
   }
 };
