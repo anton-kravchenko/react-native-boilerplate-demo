@@ -1,201 +1,248 @@
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
-Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
-
 ## Table of Contents
 
-* [Updating to New Releases](#updating-to-new-releases)
+- [Purpose](#purpose)
+
 * [Available Scripts](#available-scripts)
-  * [npm start](#npm-start)
-  * [npm test](#npm-test)
-  * [npm run ios](#npm-run-ios)
-  * [npm run android](#npm-run-android)
-  * [npm run eject](#npm-run-eject)
-* [Writing and Running Tests](#writing-and-running-tests)
-* [Environment Variables](#environment-variables)
-  * [Configuring Packager IP Address](#configuring-packager-ip-address)
-* [Customizing App Display Name and Icon](#customizing-app-display-name-and-icon)
-* [Sharing and Deployment](#sharing-and-deployment)
-  * [Publishing to Expo's React Native Community](#publishing-to-expos-react-native-community)
-  * [Building an Expo "standalone" app](#building-an-expo-standalone-app)
-  * [Ejecting from Create React Native App](#ejecting-from-create-react-native-app)
-    * [Build Dependencies (Xcode & Android Studio)](#build-dependencies-xcode-android-studio)
-    * [Should I Use ExpoKit?](#should-i-use-expokit)
-* [Troubleshooting](#troubleshooting)
-  * [Networking](#networking)
-  * [iOS Simulator won't open](#ios-simulator-wont-open)
-  * [QR Code does not scan](#qr-code-does-not-scan)
+  - [Builtin create-react-native-app scripts](#builtin-scripts)
+  - [Additional npm scripts](#additional-npm-scripts)
+    - [npm run jest](#npm-run-jest)
+    - [npm run test](#npm-run-test)
+    - [npm run test:watch](#npm-run-test:watch)
+    - [npm run flow](#npm-run-flow)
+    - [npm run flow-coverage](#npm-run-flow-coverage)
+    - [npm run prettier](#npm-run-prettier)
+    - [npm run format](#npm-run-format)
+    - [npm run precommit](#npm-run-precommit)
+    - [npm run lint](#npm-run-lint)
+    - [npm run lint:fix](#npm-run-lint:fix)
+    - [npm run check-health](#npm-run-check-health)
+* [Motivation](#motivation)
+  - [Automated testing](#automated-testing)
+  - [Code style](#code-style)
+  - [Linting](#linting)
+  - [Static type checker](#static-type-checker)
+  - [Continuous integration](#continuous-integration)
+* [Issues](#issues)
+  - [Linter config](#linter-config)
+  - [Flow usage](#flow-usage)
+  - [Crash on Android](#crash-on-android)
 
-## Updating to New Releases
+## Purpose
 
-You should only need to update the global installation of `create-react-native-app` very rarely, ideally never.
-
-Updating the `react-native-scripts` dependency of your app should be as simple as bumping the version number in `package.json` and reinstalling your project's dependencies.
-
-Upgrading to a new version of React Native requires updating the `react-native`, `react`, and `expo` package versions, and setting the correct `sdkVersion` in `app.json`. See the [versioning guide](https://github.com/react-community/create-react-native-app/blob/master/VERSIONS.md) for up-to-date information about package version compatibility.
+This project suites as a boilerplate configuration for React Native project. It is a basic React Native Redux application with bunch of useful npm scripts and examples of unit/integration tests.
 
 ## Available Scripts
 
-If Yarn was installed when the project was initialized, then dependencies will have been installed via Yarn, and you should probably use it to run these commands as well. Unlike dependency installation, command running syntax is identical for Yarn and NPM at the time of this writing.
+#### Builtin scripts
 
-### `npm start`
+App uses [Create React Native App](https://github.com/react-community/create-react-native-app) so by default following npm commands are available:
 
-Runs your app in development mode.
+- `npm start`
+- `npm test`
+- `npm run ios`
+- `npm run android`
+- `npm run eject`
 
-Open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.
+  Refer to the [official guide](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md) for more details regarding [Create React Native App](https://github.com/react-community/create-react-native-app) workflow and capabilities.
 
-Sometimes you may need to reset or clear the React Native packager's cache. To do so, you can pass the `--reset-cache` flag to the start script:
+### Additional npm scripts
 
-```
-npm start --reset-cache
-# or
-yarn start --reset-cache
-```
+#### `npm run jest`
 
-#### `npm test`
+Executes [jest](https://github.com/facebook/jest) with `jest.config.js` configuration.
 
-Runs the [jest](https://github.com/facebook/jest) test runner on your tests.
+#### `npm run test`
 
-#### `npm run ios`
+Executes [jest](https://github.com/facebook/jest) and generates test coverage report
 
-Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
+#### `npm run test:watch`
 
-#### `npm run android`
+Executes [jest](https://github.com/facebook/jest) in [watch](https://facebook.github.io/jest/docs/en/cli#watch) mode
 
-Like `npm start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup). We also recommend installing Genymotion as your Android emulator. Once you've finished setting up the native build environment, there are two options for making the right copy of `adb` available to Create React Native App:
+#### `npm run flow`
 
-##### Using Android Studio's `adb`
+Executes [flow](https://github.com/facebook/flow) type checker
 
-1. Make sure that you can run adb from your terminal.
-2. Open Genymotion and navigate to `Settings -> ADB`. Select “Use custom Android SDK tools” and update with your [Android SDK directory](https://stackoverflow.com/questions/25176594/android-sdk-location).
+#### `npm run flow-coverage`
 
-##### Using Genymotion's `adb`
+Generates [flow-coverage](https://github.com/rpl/flow-coverage-report) report
 
-1. Find Genymotion’s copy of adb. On macOS for example, this is normally `/Applications/Genymotion.app/Contents/MacOS/tools/`.
-2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
-3. Make sure that you can run adb from your terminal.
+#### `npm run prettier`
 
-#### `npm run eject`
+Executes [prettier](https://github.com/prettier/prettier)
 
-This will start the process of "ejecting" from Create React Native App's build scripts. You'll be asked a couple of questions about how you'd like to build your project.
+#### `npm run format`
 
-**Warning:** Running eject is a permanent action (aside from whatever version control system you use). An ejected app will require you to have an [Xcode and/or Android Studio environment](https://facebook.github.io/react-native/docs/getting-started.html) set up.
+Executes [eslint](https://github.com/eslint/eslint) (in `--fix` mode) and [prettier](https://github.com/prettier/prettier)
 
-## Customizing App Display Name and Icon
+#### `npm run precommit`
 
-You can edit `app.json` to include [configuration keys](https://docs.expo.io/versions/latest/guides/configuration.html) under the `expo` key.
+This script registers `precommit` hook, that executes `prettier` before every commit - no need to call it directly
 
-To change your app's display name, set the `expo.name` key in `app.json` to an appropriate string.
+#### `npm run lint`
 
-To set an app icon, set the `expo.icon` key in `app.json` to be either a local path or a URL. It's recommended that you use a 512x512 png file with transparency.
+Executes [eslint](https://github.com/eslint/eslint)
 
-## Writing and Running Tests
+#### `npm run lint:fix`
 
-This project is set up to use [jest](https://facebook.github.io/jest/) for tests. You can configure whatever testing strategy you like, but jest works out of the box. Create test files in directories called `__tests__` or with the `.test` extension to have the files loaded by jest. See the [the template project](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/App.test.js) for an example test. The [jest documentation](https://facebook.github.io/jest/docs/en/getting-started.html) is also a wonderful resource, as is the [React Native testing tutorial](https://facebook.github.io/jest/docs/en/tutorial-react-native.html).
+Executes [eslint](https://github.com/eslint/eslint) in [--fix](https://eslint.org/docs/user-guide/command-line-interface#--fix) mode
 
-## Environment Variables
+#### `npm run check-health`
 
-You can configure some of Create React Native App's behavior using environment variables.
+Executes all available scripts, that commit to code quality:
 
-### Configuring Packager IP Address
+- `lint`
+- `flow`
+- `test`
+- `format`
+- `flow-coverage`
 
-When starting your project, you'll see something like this for your project URL:
+That script could be executed in CI as part of build.
 
-```
-exp://192.168.0.2:19000
-```
+### Motivation
 
-The "manifest" at that URL tells the Expo app how to retrieve and load your app's JavaScript bundle, so even if you load it in the app via a URL like `exp://localhost:19000`, the Expo client app will still try to retrieve your app at the IP address that the start script provides.
+This topic briefly describes motivation behind configuration described above
 
-In some cases, this is less than ideal. This might be the case if you need to run your project inside of a virtual machine and you have to access the packager via a different IP address than the one which prints by default. In order to override the IP address or hostname that is detected by Create React Native App, you can specify your own hostname via the `REACT_NATIVE_PACKAGER_HOSTNAME` environment variable:
+## Automated testing
 
-Mac and Linux:
+1.1 Motivation
+Automated testing has its proven ability of eliminating significant amount of bugs before "production", simplified regression testing, pointing to bugs caused by massive refactorings. It is a crucial part of success of any big JavaScript project, since JavaScript is extremely dynamic language, known for its weird aspects like: implicit types coercion, extremely complex and absolutely not obvious semantics of all arithmetic operations, indirect support of OOP, "resistance" to lots of errors (this behavior sometimes results in absolutely unpredictable application flow). It is absolutely must-have practice to have good test (automated) coverage for big JavaScript projects.
 
-```
-REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname' npm start
-```
+1.2 Benefits of automated testing
+In addition to items described above, automated testing is also beneficial for a development process itself.
+Automated tests:
 
-Windows:
-```
-set REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname'
-npm start
-```
+- (especially unit tests) may suite as some kind of code documentation (which never gets outdated).
+- enable fast "feedback loop" - if some breaking changes were introduced during development of new feature/bug fix/refactoring - failing test will point to problematic part of the code right away
+- eliminates necessity of manual verifying all application functionality to make sure that no breaking changes were introduced during development (in JavaScript applications it is important, because there are no static validation/verification/compilation step - code may fail only in runtime)
+- it is a known fact, that developers with "automated testing mindset" produce better code (more concise, state-free (when possible), modular, e.t.c.)
+- allows to gain ability to move fast without breaking things
 
-The above example would cause the development server to listen on `exp://my-custom-ip-address-or-hostname:19000`.
+  1.3 Unit testing
+  Unit testing is a most well known kind of automated tests. In a ReactNative application, unit tests could be used to cover logic responsible for modifying application global state - to make sure that all transitions from one state to another are well defined and correct. Also unit tests are useful for verifying all business logic of application that doesn't rely on external services.
 
-## Sharing and Deployment
+  1.4 Snapshot/components testing
+  Modern test runners (like Jest) provide powerful capabilities for efficient testing of React/ReactNative components. Such tests could help with verifying component - related concerns: "render" logic, proper response to user input, proper translations between internal component state.
 
-Create React Native App does a lot of work to make app setup and development simple and straightforward, but it's very difficult to do the same for deploying to Apple's App Store or Google's Play Store without relying on a hosted service.
+  1.5 Graybox End-to-end testing
+  There are several known issues with classic blackbox E2E testing approach:
 
-### Publishing to Expo's React Native Community
+- flakiness - due to nature of truly E2E tests, almost any E2E test may fail any time. That happens due to several reasons:
+- E2E tests heavily rely on external services (APIs, databases, authentication services, e.t.c) - any of such services may fail, may break defined contracts, may not respond during reasonable time
+- E2E tests doesn't aware about device performance characteristics - same suite of tests may behave differently on different devices
+- unreasonably slow tests execution - since blackbox E2E tests have to deal with manual synchronizations (via numerous "sleep" functions), heavy external services, etc
+- slow "feedback" loop - in most cases E2E tests are being executed as part of "nightly" build so there is at least 24 hours gap between introducing a bug and finding it.
 
-Expo provides free hosting for the JS-only apps created by CRNA, allowing you to share your app through the Expo client app. This requires registration for an Expo account.
+In a ReactNative application, E2E tests are especially useful, because (in theory) single well-defined suite could test both android and ios applications. Also ReactNative may have issues with support of certain UI components: some ui components may be supported only for IOS or only for Android.
 
-Install the `exp` command-line tool, and run the publish command:
+There are at least one tool, which can pinpoint such kind of issues(described above) with ReactNative and provide capabilities for writing functional graybox E2E tests that are free of issues with blackbox E2E tests.
+https://hackernoon.com/detox-gray-box-end-to-end-testing-framework-for-mobile-apps-196ccd9564ce
 
-```
-$ npm i -g exp
-$ exp publish
-```
+Also such approach for testing application logic in E2E manner could boost developers productivity (because "Detox" tests are relatively fast and can run for each commit and on any machine, which has android and ios simulator).
 
-### Building an Expo "standalone" app
+1.6 Testing tools
+There are several testing frameworks available for JavaScript React and ReactNative projects. One of the most powerful ones is Jest. It has several strengths (comparing to another popular test framework - mocha):
 
-You can also use a service like [Expo's standalone builds](https://docs.expo.io/versions/latest/guides/building-standalone-apps.html) if you want to get an IPA/APK for distribution without having to build the native code yourself.
+- it is open source and baked by Facebook - so it has first class support and capabilities for testing React/ReactNative applications
+- it is "all in one" tool. It has
+- rich assertions library
+- built-in "mocking" library
+- built-in support for code coverage
+- tools for testing React/ReactNative applications
+- it is very fast:
+- it is able to execute test suites in parallel on each available threads
+- it has smart task planning module - it is smart enough to execute heavy tests before executing smaller one
 
-### Ejecting from Create React Native App
+  1.7 Downsides of automated testing
+  There are numerous automated testing techniques/approaches/workflows (several of them are described above). It is important to carefully confider and define available testing approaches and techniques to define configuration ("testing pyramid"), where benefits of testing will outweigh downsides and efforts.
 
-If you want to build and deploy your app yourself, you'll need to eject from CRNA and use Xcode and Android Studio.
+  1.8 Summary
+  Good test (automated) coverage is important part of success of any software project. It helps to achieve main business goals - high quality, error free software products. JavaScript has known issues with maintainability so it is absolutely obvious, that with big JavaScript code bases it becomes extremely hard to move fast without breaking existing code.
 
-This is usually as simple as running `npm run eject` in your project, which will walk you through the process. Make sure to install `react-native-cli` and follow the [native code getting started guide for React Native](https://facebook.github.io/react-native/docs/getting-started.html).
+## Code style
 
-#### Should I Use ExpoKit?
+2.1 Motivation
+Code style is an important part of any software project. Since "Dany" team will include developers with different technological background (Java, Objective C, JavaScript), it is important to choose unified code style for the whole project. In JavaScript, there are many of style guides, backed by different companies and open source software products. Due to several reasons, JavaScript community did not come up with a unified code style guide / document. Therefore, there are two possible ways to gain consistency in a code base (described in 3.2 and 3.3)
 
-If you have made use of Expo APIs while working on your project, then those API calls will stop working if you eject to a regular React Native project. If you want to continue using those APIs, you can eject to "React Native + ExpoKit" which will still allow you to build your own native code and continue using the Expo APIs. See the [ejecting guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) for more details about this option.
+2.2 Implementing own code style document / guide for project
+Development of own code style guide / document. One of the possible ways of solving “code style” issue is to develop own code style document. There are several disadvantages of such approach:
+Such effort may may take a lot of time from the creators to learn best “code styling” rules and to formalize all of them in a code style document
+It may take some time for the developers to learn all those coding style rules
+It is relatively hard to manually follow all rules described in code style document
 
-## Troubleshooting
+2.3 Automatic code formatters
+On the other hand, automatic code formatting tools (such as https://github.com/prettier/prettier), can solve "code style issue" with absolutely no cost. Prettier is a configurable code formatter, that basically reads code and re-formats it in accordance with built-in code style rules. This approach can significantly improve code readability (due to code style consistency) and will not require any specific actions from developers (except initial one-time configuration). Automatic code formatters provide several benefits:
+No need to develop own code style document (prettier has built-in code style rules)
+No need to learn any code style document (because prettier will take care about code compliance with built-in rules)
+No need to manually follow / track styling rules
+Prettier is configurable: 2/4 spaces tab size, spaces / tabs, single quotes / double quotes, maximum line length, e.t.c
 
-### Networking
+2.4 Workflow with automatic code formatters
+Execution of “prettier" could be triggered by a pre-commit hook (could be registered via npm scripts) or as part of a pre-commit hook in a git repository. Also it can be executed from code editor (for example from VS Code)
 
-If you're unable to load your app on your phone due to a network timeout or a refused connection, a good first step is to verify that your phone and computer are on the same network and that they can reach each other. Create React Native App needs access to ports 19000 and 19001 so ensure that your network and firewall settings allow access from your device to your computer on both of these ports.
+## Linting
 
-Try opening a web browser on your phone and opening the URL that the packager script prints, replacing `exp://` with `http://`. So, for example, if underneath the QR code in your terminal you see:
+3.1 Linting overview
+Linter is a static code analyzer, that helps to find problematic code patterns and to force specific code style rules.
 
-```
-exp://192.168.0.1:19000
-```
+3.2 Linting motivation
+Linter tool (such as [eslint](https://github.com/eslint/eslint)) can enforce following rules (full list of available rules https://eslint.org/docs/rules/):
 
-Try opening Safari or Chrome on your phone and loading
+- functional:
+- no unused variables/function arguments
+- no-var - force to use let/const instead of "var" to avoid "hoisting" behavior
+- disallow with statements
+- no-this-before-super - disallow this/super before calling super() in constructors
+- no-class-assign - disallow reassigning class members
+- code style:
+- camelcase - enforce camelcase naming convention
+- coma-spasing - enforce consistent spacing before and after commas
+- block-spasing - enforce spaces inside of blocks after opening block and before closing block
+- prefer-arrow-callback - require using arrow functions for callbacks
 
-```
-http://192.168.0.1:19000
-```
+It is a common practice to incorporate linting into the compilation process as "health_check" npm script and as pre-commit step in a git repository as additional static verification step. Also usage of ESlint + prettier can force strict and consistent code style across all project. It is very helpful, because there is no need in developing/maintaining own exhaustive "code standard" document.
 
-and
+## Static type checker
 
-```
-http://192.168.0.1:19001
-```
+JavaScript as a language, wasn't designed to be an effective tool for a development of big software systems (partially described in 1.1). Projects, entirely written in JavaScript, at some point, start to suffer from maintainability issues (result of extremely dynamic nature of the language - there are no way to check code correctness before runtime).
 
-If this works, but you're still unable to load your app by scanning the QR code, please open an issue on the [Create React Native App repository](https://github.com/react-community/create-react-native-app) with details about these steps and any other error messages you may have received.
+It is one of the reasons why there are so many «compile to js” languages. One of the most successful and popular ones are Flow and Typescript. Both of them are statically typed super sets of JavaScript. Tools like Flow and TypeScript allows to:
 
-If you're not able to load the `http` URL in your phone's web browser, try using the tethering/mobile hotspot feature on your phone (beware of data usage, though), connecting your computer to that WiFi network, and restarting the packager. If you are using a VPN you may need to disable it.
+- statically verify code "soundness" before runtime (both of the tools have proven ability of finding "problematic" code that may cause runtime exceptions)
+- boost development workflow:
+- smart autocomplete
+- confident refactorings
+- explicit contracts of APIs
 
-### iOS Simulator won't open
+## Continuous integration
 
-If you're on a Mac, there are a few errors that users sometimes see when attempting to `npm run ios`:
+It is a common practice to run all available/implemented verification steps for each single commit in shared branches.
+All of the items described above could be used as such static verification steps. To simplify and unify execution of all items described above - separate "check_health" npm script could be created. Such script may include following items:
 
-* "non-zero exit code: 107"
-* "You may need to install Xcode" but it is already installed
-* and others
+- execution of Flow type checker (or TypeScript compiler) ( to make verify system "soundness" statically - before runtime)
+- execution of unit / integration / E2E tests (execution of Jest in CI mode (in that mode Jest wont create new snapshots) and Detox in headless(in-memory emulator) mode (if possible)
+- execution of linter - to make sure, that code base is consistent with best practices (described in item 3)
+- execution of prettier - to automatically reformat source files (to automatically enforce consistent code style)
+- generating (and deployment if commit is going to be merged to master branch) of static code documentation - described in item 5.1
+- build of Android / IOS bundles - to make sure, that no breaking changes were introduced
 
-There are a few steps you may want to take to troubleshoot these kinds of errors:
+## Issues
 
-1. Make sure Xcode is installed and open it to accept the license agreement if it prompts you. You can install it from the Mac App Store.
-2. Open Xcode's Preferences, the Locations tab, and make sure that the `Command Line Tools` menu option is set to something. Sometimes when the CLI tools are first installed by Homebrew this option is left blank, which can prevent Apple utilities from finding the simulator. Make sure to re-run `npm/yarn run ios` after doing so.
-3. If that doesn't work, open the Simulator, and under the app menu select `Reset Contents and Settings...`. After that has finished, quit the Simulator, and re-run `npm/yarn run ios`.
+## Linter config
 
-### QR Code does not scan
+Since project uses React Native, Flow and Prettier, linter config (`.eslintrc.config.js`) may look a bit **overwhelming**. However, it includes configs from `airbnb`, `prettier/flowtype` and `prettier/react`. Also, there are several disables rules:
 
-If you're not able to scan the QR code, make sure your phone's camera is focusing correctly, and also make sure that the contrast on the two colors in your terminal is high enough. For example, WebStorm's default themes may [not have enough contrast](https://github.com/react-community/create-react-native-app/issues/49) for terminal QR codes to be scannable with the system barcode scanners that the Expo app uses.
+- `class-methods-use-this`
+- `react/destructuring-assignment`
+- `react/sort-comp`
+- `react/jsx-filename-extension`
 
-If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
+## Flow usage
+
+`npm run flow-coverage` (as well as `npm run flow`) script may fail. I'm not sure why, but flow server may not respond to `flow-coverage` requests if it (flow) installed (and executed) globally. To fix this issues run `flow stop` (this command stops `flow server`) and run `npm run flow-coverage` again.
+
+## Crash on Android
+
+App crashes on Android (on second screen) but with IOS (Iphone 8 and Iphone X emulator) everything is fine.
