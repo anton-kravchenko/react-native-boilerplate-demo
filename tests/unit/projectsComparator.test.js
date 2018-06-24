@@ -7,13 +7,6 @@ import {
   sortProjectsByScore
 } from "../../src/projectsComparator";
 
-import type {
-  RepoScoreIdTriple,
-  RepoScorePair
-} from "../src/projectsComparator";
-
-import type { Repo } from "../src/GitRepos";
-
 describe("test projectsComparator module", () => {
   test("test calcScoreForProject function", () => {
     const repo = {
@@ -71,9 +64,10 @@ describe("test projectsComparator module", () => {
       score: 100
     };
 
-    expect(
-      sortProjectsByScore([repoShouldBeSecond, repoShouldBeFirst])
-    ).toEqual([repoShouldBeFirst, repoShouldBeSecond]);
+    expect(sortProjectsByScore([repoShouldBeSecond, repoShouldBeFirst])).toEqual([
+      repoShouldBeFirst,
+      repoShouldBeSecond
+    ]);
   });
 
   test("test getSorterProjectsWithScores function", () => {

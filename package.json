@@ -37,13 +37,14 @@
     "jest": "jest --config jest.config.js",
     "test": "npm run jest -- --coverage",
     "test:watch": "npm run jest -- --watch",
+    "flow": "flow --show-all-errors",
     "flow-coverage": "flow-coverage-report -i 'src/**/*.{js,jsx}' -x 'src/test/**' -t html -t json -t text --threshold 80",
     "prettier": "prettier --write *.{js,jsx}",
     "format": "npm-run-all -s prettier lint:fix",
     "precommit": "pretty-quick --staged",
     "lint": "eslint -c .eslintrc.config.js src/* store/*",
     "lint:fix": "npm run lint -- --fix",
-    "check-health": "npm-run-all -s test format lint flow-coverage"
+    "check-health": "npm-run-all -s lint flow test format flow-coverage"
   },
   "jest": {
     "preset": "jest-expo"

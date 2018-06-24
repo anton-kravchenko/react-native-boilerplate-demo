@@ -16,10 +16,7 @@ import {
   // $FlowFixMe
 } from "native-base";
 
-// eslint-disable-next-line import/no-unresolved
-import type { NavigationScreenProp } from "react-navigation/src/TypeDefinition";
 import store from "../store/store";
-
 import type { Repo } from "./Repo";
 
 type GitReposState = {
@@ -31,7 +28,9 @@ type GitReposState = {
   org: string
 };
 
-type GitRepoProps = NavigationScreenProp<any>;
+type GitRepoProps = {
+  navigation: any
+};
 
 class GitRepos extends Component<GitRepoProps, GitReposState> {
   constructor(props: GitRepoProps) {

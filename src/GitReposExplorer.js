@@ -17,8 +17,11 @@ import store from "../store/store";
 type State = {
   org: string
 };
+type Props = {
+  navigation: any
+};
 
-class GitReposExplorer extends Component<{}, State> {
+class GitReposExplorer extends Component<Props, State> {
   constructor(props: empty) {
     super(props);
 
@@ -32,7 +35,7 @@ class GitReposExplorer extends Component<{}, State> {
       type: "SET_ORGANIZATION_NAME",
       payload: this.state.org
     });
-    // eslint-disable-next-line react/prop-types
+
     this.props.navigation.navigate("Projects");
   };
 
