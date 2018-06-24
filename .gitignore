@@ -10,6 +10,7 @@ coverage/
 flow-coverage/
 package-lock.json
 yarn.lock
+native-base-theme/
 
 # misc
 .env.local
