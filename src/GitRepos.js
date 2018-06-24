@@ -224,10 +224,7 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
             onChangeText={(text: string) => this.setState({ filterByStr: text })}
           />
         </Item>
-        <Text style={{ textAlign: "center" }}>
-          Repos by
-          {org}
-        </Text>
+        <Text style={{ textAlign: "center" }}>Repos by {org}</Text>
         {this.renderRepos(filteredRepos)}
         {this.renderCompareButton()}
       </Container>
