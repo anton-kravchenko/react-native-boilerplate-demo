@@ -37,7 +37,7 @@
     "jest": "jest --config jest.config.js",
     "test": "npm run jest -- --coverage",
     "test:watch": "npm run jest -- --watch",
-    "flow": "flow --show-all-errors",
+    "flow": "flow stop && flow --show-all-errors",
     "flow-coverage": "flow-coverage-report -i 'src/**/*.{js,jsx}' -x 'src/test/**' -t html -t json -t text --threshold 80",
     "prettier": "prettier --write *.{js,jsx}",
     "format": "npm-run-all -s prettier lint:fix",

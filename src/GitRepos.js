@@ -214,7 +214,6 @@ class GitRepos extends Component<GitRepoProps, GitReposState> {
     }
 
     const filteredRepos = this.filterReposByStr(repos, filterByStr);
-
     return (
       <Container>
         <Item>
