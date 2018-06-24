@@ -1,13 +1,16 @@
 module.exports = {
   verbose: true,
   notify: true,
-  collectCoverageFrom: ["**/src/**/*.{js,jsx}"],
+  notifyMode: "success-change",
+  silent: true,
+  verbose: true,
+  collectCoverageFrom: ["**/src/**/*.{js,jsx}", "**/store/**/*.{js,jsx}"],
   coverageThreshold: {
     global: {
-      branches: 0,
-      functions: 3,
-      lines: 3,
-      statements: 3
+      branches: 5,
+      functions: 5,
+      lines: 5,
+      statements: 5
     }
   }
 };

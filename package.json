@@ -41,7 +41,7 @@
     "prettier": "prettier --write *.{js,jsx}",
     "format": "npm-run-all -s prettier lint:fix",
     "precommit": "pretty-quick --staged",
-    "lint": "eslint -c .eslintrc.config.js src/*",
+    "lint": "eslint -c .eslintrc.config.js src/* store/*",
     "lint:fix": "npm run lint -- --fix",
     "check-health": "npm-run-all -s test format lint flow-coverage"
   },

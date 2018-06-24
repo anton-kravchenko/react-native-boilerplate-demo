@@ -49,7 +49,7 @@ class GitReposExplorer extends Component<{}, State> {
           <Icon name="ios-search" />
           <Input
             placeholder="Project name"
-            onChangeText={(text: string) => this.setState({ org: text })}
+            onChangeText={(text: string) => this.setState({ org: text.trim() })}
           />
         </Item>
 

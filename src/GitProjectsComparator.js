@@ -15,7 +15,7 @@ import {
 } from "native-base";
 
 import store from "../store/store";
-import type { Repo } from "./GitRepos";
+import type { Repo } from "./Repo";
 import { getSorterProjectsWithScores } from "./projectsComparator";
 import type { RepoScoreIdTriple } from "./projectsComparator";
 
