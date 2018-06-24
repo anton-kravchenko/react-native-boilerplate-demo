@@ -108,9 +108,11 @@ This topic briefly describes motivation behind configuration described above
 ## Automated testing
 
 1.1 Motivation
+
 Automated testing has its proven ability of eliminating significant amount of bugs before "production", simplified regression testing, pointing to bugs caused by massive refactorings. It is a crucial part of success of any big JavaScript project, since JavaScript is extremely dynamic language, known for its weird aspects like: implicit types coercion, extremely complex and absolutely not obvious semantics of all arithmetic operations, indirect support of OOP, "resistance" to lots of errors (this behavior sometimes results in absolutely unpredictable application flow). It is absolutely must-have practice to have good test (automated) coverage for big JavaScript projects.
 
 1.2 Benefits of automated testing
+
 In addition to items described above, automated testing is also beneficial for a development process itself.
 Automated tests:
 
@@ -121,13 +123,16 @@ Automated tests:
 - allows to gain ability to move fast without breaking things
 
   1.3 Unit testing
-  Unit testing is a most well known kind of automated tests. In a ReactNative application, unit tests could be used to cover logic responsible for modifying application global state - to make sure that all transitions from one state to another are well defined and correct. Also unit tests are useful for verifying all business logic of application that doesn't rely on external services.
 
-  1.4 Snapshot/components testing
-  Modern test runners (like Jest) provide powerful capabilities for efficient testing of React/ReactNative components. Such tests could help with verifying component - related concerns: "render" logic, proper response to user input, proper translations between internal component state.
+Unit testing is a most well known kind of automated tests. In a ReactNative application, unit tests could be used to cover logic responsible for modifying application global state - to make sure that all transitions from one state to another are well defined and correct. Also unit tests are useful for verifying all business logic of application that doesn't rely on external services.
 
-  1.5 Graybox End-to-end testing
-  There are several known issues with classic blackbox E2E testing approach:
+1.4 Snapshot/components testing
+
+Modern test runners (like Jest) provide powerful capabilities for efficient testing of React/ReactNative components. Such tests could help with verifying component - related concerns: "render" logic, proper response to user input, proper translations between internal component state.
+
+1.5 Graybox End-to-end testing
+
+There are several known issues with classic blackbox E2E testing approach:
 
 - flakiness - due to nature of truly E2E tests, almost any E2E test may fail any time. That happens due to several reasons:
 - E2E tests heavily rely on external services (APIs, databases, authentication services, e.t.c) - any of such services may fail, may break defined contracts, may not respond during reasonable time
@@ -143,6 +148,7 @@ https://hackernoon.com/detox-gray-box-end-to-end-testing-framework-for-mobile-ap
 Also such approach for testing application logic in E2E manner could boost developers productivity (because "Detox" tests are relatively fast and can run for each commit and on any machine, which has android and ios simulator).
 
 1.6 Testing tools
+
 There are several testing frameworks available for JavaScript React and ReactNative projects. One of the most powerful ones is Jest. It has several strengths (comparing to another popular test framework - mocha):
 
 - it is open source and baked by Facebook - so it has first class support and capabilities for testing React/ReactNative applications
@@ -157,23 +163,28 @@ There are several testing frameworks available for JavaScript React and ReactNat
   - it has smart task planning module - it is smart enough to execute heavy tests before executing smaller one
 
   1.7 Downsides of automated testing
-  There are numerous automated testing techniques/approaches/workflows (several of them are described above). It is important to carefully confider and define available testing approaches and techniques to define configuration ("testing pyramid"), where benefits of testing will outweigh downsides and efforts.
 
-  1.8 Summary
-  Good test (automated) coverage is important part of success of any software project. It helps to achieve main business goals - high quality, error free software products. JavaScript has known issues with maintainability so it is absolutely obvious, that with big JavaScript code bases it becomes extremely hard to move fast without breaking existing code.
+There are numerous automated testing techniques/approaches/workflows (several of them are described above). It is important to carefully confider and define available testing approaches and techniques to define configuration ("testing pyramid"), where benefits of testing will outweigh downsides and efforts.
+
+1.8 Summary
+
+Good test (automated) coverage is important part of success of any software project. It helps to achieve main business goals - high quality, error free software products. JavaScript has known issues with maintainability so it is absolutely obvious, that with big JavaScript code bases it becomes extremely hard to move fast without breaking existing code.
 
 ## Code style
 
 2.1 Motivation
+
 Code style is an important part of any software project. Since "Dany" team will include developers with different technological background (Java, Objective C, JavaScript), it is important to choose unified code style for the whole project. In JavaScript, there are many of style guides, backed by different companies and open source software products. Due to several reasons, JavaScript community did not come up with a unified code style guide / document. Therefore, there are two possible ways to gain consistency in a code base (described in 3.2 and 3.3)
 
 2.2 Implementing own code style document / guide for project
+
 Development of own code style guide / document. One of the possible ways of solving “code style” issue is to develop own code style document. There are several disadvantages of such approach:
 Such effort may may take a lot of time from the creators to learn best “code styling” rules and to formalize all of them in a code style document
 It may take some time for the developers to learn all those coding style rules
 It is relatively hard to manually follow all rules described in code style document
 
 2.3 Automatic code formatters
+
 On the other hand, automatic code formatting tools (such as https://github.com/prettier/prettier), can solve "code style issue" with absolutely no cost. Prettier is a configurable code formatter, that basically reads code and re-formats it in accordance with built-in code style rules. This approach can significantly improve code readability (due to code style consistency) and will not require any specific actions from developers (except initial one-time configuration). Automatic code formatters provide several benefits:
 No need to develop own code style document (prettier has built-in code style rules)
 No need to learn any code style document (because prettier will take care about code compliance with built-in rules)
@@ -181,14 +192,17 @@ No need to manually follow / track styling rules
 Prettier is configurable: 2/4 spaces tab size, spaces / tabs, single quotes / double quotes, maximum line length, e.t.c
 
 2.4 Workflow with automatic code formatters
+
 Execution of “prettier" could be triggered by a pre-commit hook (could be registered via npm scripts) or as part of a pre-commit hook in a git repository. Also it can be executed from code editor (for example from VS Code)
 
 ## Linting
 
 3.1 Linting overview
+
 Linter is a static code analyzer, that helps to find problematic code patterns and to force specific code style rules.
 
 3.2 Linting motivation
+
 Linter tool (such as [eslint](https://github.com/eslint/eslint)) can enforce following rules (full list of available rules https://eslint.org/docs/rules/):
 
 - functional:
