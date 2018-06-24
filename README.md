@@ -147,13 +147,14 @@ There are several testing frameworks available for JavaScript React and ReactNat
 
 - it is open source and baked by Facebook - so it has first class support and capabilities for testing React/ReactNative applications
 - it is "all in one" tool. It has
-- rich assertions library
-- built-in "mocking" library
-- built-in support for code coverage
-- tools for testing React/ReactNative applications
+  - rich assertions library
+  - built-in "mocking" library
+  - built-in support for code coverage
+  - tools for testing React/ReactNative applications
 - it is very fast:
-- it is able to execute test suites in parallel on each available threads
-- it has smart task planning module - it is smart enough to execute heavy tests before executing smaller one
+
+  - it is able to execute test suites in parallel on each available threads
+  - it has smart task planning module - it is smart enough to execute heavy tests before executing smaller one
 
   1.7 Downsides of automated testing
   There are numerous automated testing techniques/approaches/workflows (several of them are described above). It is important to carefully confider and define available testing approaches and techniques to define configuration ("testing pyramid"), where benefits of testing will outweigh downsides and efforts.
@@ -191,16 +192,16 @@ Linter is a static code analyzer, that helps to find problematic code patterns a
 Linter tool (such as [eslint](https://github.com/eslint/eslint)) can enforce following rules (full list of available rules https://eslint.org/docs/rules/):
 
 - functional:
-- no unused variables/function arguments
-- no-var - force to use let/const instead of "var" to avoid "hoisting" behavior
-- disallow with statements
-- no-this-before-super - disallow this/super before calling super() in constructors
-- no-class-assign - disallow reassigning class members
+  - no unused variables/function arguments
+  - no-var - force to use let/const instead of "var" to avoid "hoisting" behavior
+  - disallow with statements
+  - no-this-before-super - disallow this/super before calling super() in constructors
+  - no-class-assign - disallow reassigning class members
 - code style:
-- camelcase - enforce camelcase naming convention
-- coma-spasing - enforce consistent spacing before and after commas
-- block-spasing - enforce spaces inside of blocks after opening block and before closing block
-- prefer-arrow-callback - require using arrow functions for callbacks
+  - camelcase - enforce camelcase naming convention
+  - coma-spasing - enforce consistent spacing before and after commas
+  - block-spasing - enforce spaces inside of blocks after opening block and before closing block
+  - prefer-arrow-callback - require using arrow functions for callbacks
 
 It is a common practice to incorporate linting into the compilation process as "health_check" npm script and as pre-commit step in a git repository as additional static verification step. Also usage of ESlint + prettier can force strict and consistent code style across all project. It is very helpful, because there is no need in developing/maintaining own exhaustive "code standard" document.
 
